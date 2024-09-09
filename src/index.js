@@ -136,19 +136,8 @@ const vroomCommand = args.path + 'vroom';
 const options = [];
 options.push('-r', args.router);
 if (args.router !== 'libosrm') {
-  const routingServers = config.routingServers;
-  for (const profileName in routingServers[args.router]) {
-    const profile = routingServers[args.router][profileName];
-    if ('host' in profile && 'port' in profile) {
-      options.push('-a', profileName + ':' + profile.host);
-      options.push('-p', profileName + ':' + profile.port);
-    } else {
-      console.error(
-        "Incomplete configuration: profile '" +
-          profileName +
-          "' requires 'host' and 'port'."
-      );
-    }
+    options.push('-a', 'car:' + process.env.OSRM_HOST);
+    options.push('-p', 'car:' + process.env.OSRM_PORT);
   }
 }
 if (args.geometry) {
