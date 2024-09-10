@@ -138,7 +138,6 @@ options.push('-r', args.router);
 if (args.router !== 'libosrm') {
     options.push('-a', 'car:' + process.env.OSRM_HOST);
     options.push('-p', 'car:' + process.env.OSRM_PORT);
-  }
 }
 if (args.geometry) {
   options.push('-g');
