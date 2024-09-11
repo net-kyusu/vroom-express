@@ -136,10 +136,11 @@ const vroomCommand = args.path + 'vroom';
 const options = [];
 options.push('-r', args.router);
 if (args.router !== 'libosrm') {
-    options.push('-a', 'car:' + process.env.OSRM_HOST);
+    options.push('-a', 'car:' + process.env.OSRM_HOST.split('//')[1]);
     options.push('-p', 'car:' + process.env.OSRM_PORT);
 }
 if (args.geometry) {
+    console.log('geometry')
   options.push('-g');
 }
 
@@ -148,7 +149,7 @@ if (args.planmode) {
 }
 
 function execCallback(req, res) {
-  const reqOptions = options.slice();
+    const reqOptions = options.slice();
 
   // Default command-line values.
   let nbThreads = args.threads;
@@ -187,7 +188,8 @@ function execCallback(req, res) {
 
   const timestamp = Math.floor(Date.now() / 1000); //eslint-disable-line
   const fileName = args.logdir + '/' + timestamp + '_' + uuid.v1() + '.json';
-  try {
+    try {
+	console.log(JSON.stringify(req.body))
     fs.writeFileSync(fileName, JSON.stringify(req.body));
   } catch (err) {
     console.error(now() + ': ' + err);
@@ -268,6 +270,7 @@ app.post(args.baseurl, [
 
 // set the health endpoint with some small problem
 app.get(args.baseurl + 'health', (req, res) => {
+    console.log('health')
   const vroom = spawn(
     vroomCommand,
     ['-i', './healthchecks/vroom_custom_matrix.json'],
