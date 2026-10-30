@@ -28,7 +28,7 @@
   "author": "Julien Coupey",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.22.3",
     "helmet": "^4.6.0",
     "js-yaml": "^4.1.0",
     "minimist": "^1.2.5",
